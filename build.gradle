@@ -15,7 +15,6 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
     implementation "com.soywiz.korlibs.korio:korio-jvm:1.10.2"
-    implementation 'com.github.MrPNG:KotlinNBT:1.0.0'
 
     api("com.github.jglrxavpok:Hephaistos:1.1.5")
     api("com.github.jglrxavpok:Hephaistos:1.1.5:gson")

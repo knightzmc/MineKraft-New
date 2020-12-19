@@ -4,7 +4,6 @@ import com.soywiz.korio.stream.AsyncOutputStream
 import com.soywiz.korio.stream.write32BE
 import com.soywiz.korio.stream.write64BE
 import me.bristermitten.minekraft.data.Identifier
-import me.bristermitten.minekraft.data.NBT
 import me.bristermitten.minekraft.encoding.writeVarInt
 import me.bristermitten.minekraft.packet.OutPacket
 import me.bristermitten.minekraft.packet.PacketData
@@ -12,6 +11,7 @@ import me.bristermitten.minekraft.server.streams.writeBoolean
 import me.bristermitten.minekraft.server.streams.writeByte
 import me.bristermitten.minekraft.server.streams.writeIdentifier
 import me.bristermitten.minekraft.server.streams.writeNBT
+import org.jglrxavpok.hephaistos.nbt.NBTCompound
 
 object JoinGamePacket : OutPacket<JoinGamePacket.JoinGameData>(0x24) {
 
@@ -21,8 +21,8 @@ object JoinGamePacket : OutPacket<JoinGamePacket.JoinGameData>(0x24) {
         val gameMode: Byte,
         val previousGameMode: Byte,
         val worlds: List<Identifier>,
-        val dimensionCodec: NBT,
-        val dimension: NBT,
+        val dimensionCodec: NBTCompound,
+        val dimension: NBTCompound,
         val worldName: Identifier,
         val hashedSeed: Long,
         val maxPlayers: Int,
@@ -44,8 +44,8 @@ object JoinGamePacket : OutPacket<JoinGamePacket.JoinGameData>(0x24) {
                 writeIdentifier(it)
             }
 
-            writeNBT(data.dimensionCodec)
-            writeNBT(data.dimension)
+            writeNBT("", data.dimensionCodec)
+            writeNBT("", data.dimension)
 
             writeIdentifier(data.worldName)
             write64BE(data.hashedSeed)

@@ -12,6 +12,7 @@ import me.bristermitten.minekraft.server.streams.BufferedAsyncOutputStream
 import me.bristermitten.minekraft.server.streams.readVarInt
 import org.intellij.lang.annotations.Language
 import java.net.SocketAddress
+import javax.crypto.Cipher
 import javax.crypto.SecretKey
 
 class MineKraftClient(
@@ -19,7 +20,8 @@ class MineKraftClient(
     private val internalClient: AsyncClient
 ) : AsyncInputStream, AsyncOutputStream {
 
-    internal var encryptionKey: SecretKey? = null
+    internal var encryptionCipher: Cipher? = null
+    internal var decryptionCipher: Cipher? = null
     internal var currentState = State.Handshaking
 
     val connected get() = internalClient.connected
@@ -44,11 +46,13 @@ class MineKraftClient(
 
         //Then we make a new buffer for the final data, prepending the packet data's size
         val bytes = buffer.bytes
+
         val otherBuffer = BufferedAsyncOutputStream(getVarIntSize(bytes.size) + bytes.size)
         otherBuffer.writeVarInt(bytes.size)
         otherBuffer.writeBytes(bytes)
 
         val bytesToWrite = otherBuffer.bytes
+
         val encrypted = EncryptionProcessor.processOut(this, bytesToWrite) //Then perform encryption
         writeBytes(encrypted)
 

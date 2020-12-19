@@ -1,6 +1,5 @@
 import com.soywiz.korio.util.toByteArray
 import kotlinx.coroutines.runBlocking
-import me.bristermitten.minekraft.data.NBT
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.nio.ByteBuffer

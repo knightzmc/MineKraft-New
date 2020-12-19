@@ -4,8 +4,12 @@ import com.soywiz.korio.stream.AsyncOutputStream
 import com.soywiz.korio.stream.write64BE
 import com.soywiz.korio.stream.writeBytes
 import me.bristermitten.minekraft.data.Identifier
-import me.bristermitten.minekraft.data.NBT
+import me.bristermitten.minekraft.data.write
 import me.bristermitten.minekraft.encoding.writeVarInt
+import org.jglrxavpok.hephaistos.nbt.NBT
+import org.jglrxavpok.hephaistos.nbt.NBTWriter
+import java.io.DataOutputStream
+import java.io.OutputStream
 import java.util.*
 
 suspend fun AsyncOutputStream.writeByte(byte: Byte) = write(byte.toInt())
@@ -32,8 +36,8 @@ suspend fun AsyncOutputStream.writeIdentifier(identifier: Identifier) {
     writeMCString(identifier.stringValue)
 }
 
-suspend fun AsyncOutputStream.writeNBT(nbt: NBT) {
-    nbt.push(this)
+suspend fun AsyncOutputStream.writeNBT(name: String, nbt: NBT) {
+    nbt.write(name, this)
 }
 
 suspend fun AsyncOutputStream.writePosition(x: Int, y: Int, z: Int) {
