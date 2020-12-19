@@ -7,9 +7,6 @@ import me.bristermitten.minekraft.data.Identifier
 import me.bristermitten.minekraft.data.write
 import me.bristermitten.minekraft.encoding.writeVarInt
 import org.jglrxavpok.hephaistos.nbt.NBT
-import org.jglrxavpok.hephaistos.nbt.NBTWriter
-import java.io.DataOutputStream
-import java.io.OutputStream
 import java.util.*
 
 suspend fun AsyncOutputStream.writeByte(byte: Byte) = write(byte.toInt())

@@ -16,7 +16,7 @@ object EncryptionProcessor : PacketInProcessor, PacketOutProcessor {
         val bytes = client.readAvailable()
 
         val cipher = client.decryptionCipher!!
-        val decrypted = cipher.update(bytes)
+        val decrypted = cipher.doFinal(bytes)
 
         return ByteArrayAsyncInputStream(decrypted, client)
     }
@@ -27,7 +27,7 @@ object EncryptionProcessor : PacketInProcessor, PacketOutProcessor {
         }
 
         val cipher = client.encryptionCipher!!
-        return cipher.update(byteArray)
+        return cipher.doFinal(byteArray)
     }
 
 
